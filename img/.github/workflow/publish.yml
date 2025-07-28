@@ -1,0 +1,17 @@
+name: Publish to VS Code Marketplace
+on:
+  release:
+    types: [created]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm install
+      - run: npm install -g vsce
+      - run: vsce publish
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}

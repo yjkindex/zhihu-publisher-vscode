@@ -1,0 +1,38 @@
+// A launch configuration that compiles the extension and then opens it inside a new window
+// Use IntelliSense to learn about possible attributes.
+// Hover to view descriptions of existing attributes.
+// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": ["--extensionDevelopmentPath=${workspaceFolder}"],
+      "outFiles": ["${workspaceFolder}/out/**/*.js"],
+      "preLaunchTask": "${defaultBuildTask}"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug with ts-node",
+      "runtimeArgs": ["-r", "ts-node/register"],
+      "args": ["${file}"],
+      "cwd": "${workspaceFolder}",
+      "skipFiles": ["<node_internals>/**"],
+      "env": {
+        "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.json"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Package Extension",
+      "runtimeExecutable": "vsce",
+      "args": [
+        "package",
+      ]
+    }
+  ]
+}
