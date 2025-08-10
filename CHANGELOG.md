@@ -10,4 +10,6 @@ fix bugs
 
 - fix the errors of rendering inside formula
 
+## [1.3.2]
 
+ - add support for http image in markdown

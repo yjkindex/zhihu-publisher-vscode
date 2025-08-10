@@ -10,7 +10,7 @@ export async function publishArticle(
   const traceId = `${pubtimestamp},${Math.random()
     .toString(36)
     .substring(2, 15)}`;
-  replayer.init(vscode.extensions.getExtension("jack-base.zhihu-publisher-vscode")!.extensionPath+"/resource/publishArticle.har");
+  replayer.init(vscode.extensions.getExtension("yjkindex.vscode-zhihu-publisher")!.extensionPath+"/resource/publishArticle.har");
   replayer.modifyRequest(0, {
     url: "https://www.zhihu.com/api/v4/content/publish",
     headers: {

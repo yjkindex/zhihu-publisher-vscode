@@ -1,9 +1,9 @@
 {
-  "name": "zhihu-publisher-vscode",
-  "publisher": "jack-base",
-  "displayName": "zhihu-publisher-vscode",
+  "name": "vscode-zhihu-publisher",
+  "publisher": "yjkindex",
+  "displayName": "vscode-zhihu-publisher",
   "description": "",
-  "version": "1.2.2",
+  "version": "1.3.2",
   "engines": {
     "vscode": "^1.101.0"
   },
@@ -15,12 +15,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "zhihu-publisher-vscode.zhihuPublisher",
+        "command": "vscode-zhihu-publisher.zhihuPublisher",
         "title": "Publish to Zhihu",
         "category": "Zhihu Publisher"
       },
       {
-        "command": "zhihu-publisher-vscode.uploadImage",
+        "command": "vscode-zhihu-publisher.uploadImage",
         "title": "Upload image to Zhihu",
         "category": "Zhihu Publisher"
       }
@@ -28,13 +28,13 @@
     "menus": {
       "editor/context": [
         {
-          "command": "zhihu-publisher-vscode.zhihuPublisher",
+          "command": "vscode-zhihu-publisher.zhihuPublisher",
           "when": "editorTextFocus && resourceExtname == '.md'"
         }
       ],
       "explorer/context": [
         {
-          "command": "zhihu-publisher-vscode.zhihuPublisher",
+          "command": "vscode-zhihu-publisher.zhihuPublisher",
           "when": "!editorTextFocus && resourceExtname == '.md'"
         }
       ]
@@ -84,8 +84,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jack-base/zhihu-publisher-vscode.git"
+    "url": "https://github.com/yjkindex/vscode-zhihu-publisher.git"
   },
-  "icon": "img/icon.jpeg",
+  "icon": "img/logo.png",
   "license": "MIT"
 }

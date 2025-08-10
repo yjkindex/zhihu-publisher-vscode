@@ -23,7 +23,7 @@ export const uploadImage = async (
     // Initialize HAR replayer to mimic browser requests
     const replayer = new HarReplayer();
     const harFilePath = path.join(
-      vscode.extensions.getExtension("jack-base.zhihu-publisher-vscode")!.extensionPath,
+      vscode.extensions.getExtension("yjkindex.vscode-zhihu-publisher")!.extensionPath,
       "/resource/uploadImage.har"
     );
     replayer.init(harFilePath);

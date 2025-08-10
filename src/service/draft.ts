@@ -14,7 +14,7 @@ async function updateArticle(
     can_reward: false,
   };
   const replayer = new HarReplayer();
-  replayer.init(vscode.extensions.getExtension("jack-base.zhihu-publisher-vscode")!.extensionPath + "/resource/draft.har");
+  replayer.init(vscode.extensions.getExtension("yjkindex.vscode-zhihu-publisher")!.extensionPath + "/resource/draft.har");
   replayer.modifyRequest(0, {
     url: `https://zhuanlan.zhihu.com/api/articles/${articleId}/draft`,
     headers: {
@@ -38,7 +38,7 @@ async function createArticle(cookie: string): Promise<string | void> {
     can_reward: false,
   };
   let replayer = new HarReplayer();
-  replayer.init(vscode.extensions.getExtension("jack-base.zhihu-publisher-vscode")!.extensionPath+"/resource/draft.har");
+  replayer.init(vscode.extensions.getExtension("yjkindex.vscode-zhihu-publisher")!.extensionPath+"/resource/draft.har");
   replayer.modifyRequest(0, {
     headers: {
       Cookie: cookie,
@@ -53,7 +53,7 @@ async function deleteArticle(
   cookie: string
 ): Promise<boolean> {
   const replayer = new HarReplayer();
-  replayer.init(vscode.extensions.getExtension("jack-base.zhihu-publisher-vscode")!.extensionPath+"/resource/draft.har");
+  replayer.init(vscode.extensions.getExtension("yjkindex.vscode-zhihu-publisher")!.extensionPath+"/resource/draft.har");
   replayer.modifyRequest(0, {
     url: `https://www.zhihu.com/api/articles/${articleId}/draft`,
     headers: {

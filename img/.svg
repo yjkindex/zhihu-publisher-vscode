@@ -1,0 +1,12 @@
+<svg width="400" height="400">
+    <!-- 背景矩形 -->
+    <rect x="50" y="50" rx="50" ry="50" width="200" height="200" style="fill:#ff1d41;"/>
+    <!-- 中间圆圈 -->
+    <circle cx='150' cy='150' r='70' stroke='white' stroke - width='15' stroke - dasharray='150,20,60,20,40,20' fill="#ff1d41" stroke - linecap='round'></circle>
+    <!-- 左侧斜线 -->
+    <path d='M 150,150 L 98,235' stroke='white' stroke - width='15' stroke - linecap='round'></path>
+    <!-- 右侧斜线 -->
+    <path d='M 150,150 L 202,235' stroke='white' stroke - width='15' stroke - linecap='round' stroke - dasharray='50 20 30'></path>
+    <!-- 底部横线 -->
+    <path d='M 80,238 L 220,238'stroke='#ff1d41' stroke - width='10'></path>
+</svg>

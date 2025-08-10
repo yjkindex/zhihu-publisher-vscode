@@ -1,6 +1,6 @@
-# zhihu-publisher-vscode README
+# vscode-zhihu-publisher README
 
-This is the README for extension "zhihu-publisher-vscode". 
+This is the README for extension "vscode-zhihu-publisher". 
 
 ## Features
 
@@ -40,6 +40,6 @@ Users appreciate release notes as you update your extension.
 
 ## Dev
 welcome to contribute and fork me
-**[Github](https://github.com/jack-base/zhihu-publisher-vscode)**
+**[Github](https://github.com/yjkindex/vscode-zhihu-publisher)**
 
 **Enjoy!**

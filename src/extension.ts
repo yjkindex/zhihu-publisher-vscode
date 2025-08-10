@@ -4,7 +4,7 @@ import { zhihuPublisher } from "./provider/zhihuPublisher";
 export function activate(context: vscode.ExtensionContext) {
   let disposable = [
     vscode.commands.registerCommand(
-      "zhihu-publisher-vscode.zhihuPublisher",
+      "vscode-zhihu-publisher.zhihuPublisher",
       zhihuPublisher
     )
   ];
