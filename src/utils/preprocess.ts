@@ -3,6 +3,7 @@ import path from "path";
 import { uploadImage } from "../service/uploadImage";
 import { readZhihuResourceMap, writeZhihuResourceMap } from "./zhihuResourceMapManager";
 import vscode from "vscode";
+import { downloadImage } from "../service/downloadImage";
 
 /**
  * Replaces all image paths in Markdown text with their corresponding web URLs from the resource map
@@ -32,7 +33,7 @@ function replaceImagesWithLinks(
 }
 
 /**
- * Extracts all local image paths from Markdown text
+ * Extracts all image paths from Markdown text
  * @param markdownText The Markdown content to parse
  * @returns Array of cleaned local image paths
  */
@@ -53,8 +54,17 @@ function extractImagePaths(markdownText: string): string[] {
       imagePaths.push(cleanPath);
     }
   }
-
+  console.log("Extracted image paths:", imagePaths);
   return imagePaths;
+}
+
+/**
+ * Checks if a path is a URL (starts with http:// or https://)
+ * @param path The path to check
+ * @returns True if the path is a URL, false otherwise
+ */
+function isHttpUrl(path: string): boolean {
+  return /^https?:\/\//i.test(path);
 }
 
 /**
@@ -85,30 +95,37 @@ export async function preprocessMarkdown(
     );
 
     // Extract all image paths from the Markdown content
-    const relativeImagePaths = extractImagePaths(markdownContent);
-
-    // Convert relative image paths to absolute paths relative to workspace root
-    const absoluteImagePaths = relativeImagePaths.map(relativePath =>
-      path.join(path.dirname(markdownPath), relativePath)
-    );
+    const imagePaths = extractImagePaths(markdownContent);
 
     // Create upload tasks for images not already in the resource map
-    const uploadPromises = absoluteImagePaths.map(async (imagePath) => {
+    const uploadPromises = imagePaths.map(async (originalPath) => {
       // Skip upload if image is already mapped
+      if (resourceMap[originalPath]) {
+        return;
+      }
+
       try {
-        // Read image file from disk
-        const fullImagePath = path.join(workspaceFolder, imagePath);
-        const imageBuffer = fs.readFileSync(fullImagePath);
+        let imageBuffer: Buffer;
+        
+        if (isHttpUrl(originalPath)) {
+          // Handle HTTP/HTTPS images: download first
+          console.log(`Downloading image from URL: ${originalPath}`);
+          imageBuffer = await downloadImage(originalPath);
+        } else {
+          // Handle local images: read from file system
+          const fullImagePath = path.join(workspaceFolder, path.dirname(markdownPath), originalPath);
+          imageBuffer = fs.readFileSync(fullImagePath);
+        }
 
         // Upload image to Zhihu and get online URL
         const imageUrl = await uploadImage(imageBuffer, cookie);
 
         if (typeof imageUrl === "string") {
-          console.log(`Successfully uploaded image: ${imagePath}`);
-          resourceMap[imagePath] = imageUrl; // Update mapping
+          console.log(`Successfully processed image: ${originalPath}`);
+          resourceMap[originalPath] = imageUrl; // Update mapping with original path as key
         }
       } catch (error) {
-        console.error(`Error uploading image ${imagePath}:`, error);
+        console.error(`Error processing image ${originalPath}:`, error);
       }
     });
 
@@ -118,23 +135,9 @@ export async function preprocessMarkdown(
     // Save updated resource mappings to file
     writeZhihuResourceMap(resourceMapPath, resourceMap);
 
-    // Replace all local image paths with their corresponding online URLs
-    markdownContent = markdownContent.replace(
-      /!\[(.*?)\]\((.*?)\)/g,
-      (match, imageAlt, relativePath) => {
-        // Calculate absolute path for lookup in resource map
-        const absoluteImagePath = path.join(
-          path.dirname(markdownPath),
-          relativePath
-        );
-        
-        // Get the online URL from resource map (fallback to original path if missing)
-        const imageUrl = resourceMap[absoluteImagePath] || relativePath;
-        
-        return `![${imageAlt}](${imageUrl})`;
-      }
-    );
-
+    // Replace all original image paths with their corresponding online URLs
+    markdownContent = replaceImagesWithLinks(markdownContent, resourceMap);
+    console.log("Uploaded markdownContent:", markdownContent);
     console.log("Markdown preprocessing completed successfully");
     return markdownContent;
   } catch (error) {

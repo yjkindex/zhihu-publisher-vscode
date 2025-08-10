@@ -60,6 +60,7 @@
   },
   "devDependencies": {
     "@types/ali-oss": "^6.16.11",
+    "@types/jest": "^30.0.0",
     "@types/md5": "^2.3.5",
     "@types/mocha": "^10.0.10",
     "@types/node": "^20.19.2",
@@ -69,6 +70,7 @@
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.5.2",
     "eslint": "^9.25.1",
+    "jest": "^30.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },
